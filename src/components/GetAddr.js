@@ -14,6 +14,8 @@ import { ethers } from 'ethers'
 
 import Scanner from './Scanner';
 
+const ADDR = /0x[0-9a-zA-Z]{40}/
+
 class GetAddr extends React.Component
 {
 	state = { addr: "" }
@@ -23,11 +25,13 @@ class GetAddr extends React.Component
 		return new Promise((resolve, reject) => {
 			try
 			{
-				resolve(ethers.utils.getAddress(addr))
+				resolve(ethers.utils.getAddress(ADDR.exec(addr)[0]))
 			}
 			catch
 			{
-				this.props.context.provider.resolveName(addr).then(resolve).catch(reject)
+				this.props.context.provider.resolveName(addr)
+				.then(addr => { addr ? resolve(addr) : reject() })
+				.catch(reject)
 			}
 		})
 	}
@@ -41,7 +45,7 @@ class GetAddr extends React.Component
 				this.props.history.push(`/${this.props.match.params.label}/${address}`)
 			})
 			.catch(() => {
-				console.error(`'${addr}'' is not an ethereum address`)
+				console.error(`'${addr}' is not an ethereum address`)
 			})
 		}
 	}

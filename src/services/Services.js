@@ -5,12 +5,12 @@ import Context    from '../context';
 
 import ENS  from '@ensdomains/ens/build/contracts/ENS.json'
 import FIFS from '@ensdomains/ens/build/contracts/FIFSRegistrar.json'
-const CONFIG = { root: 'users.iexec.eth' }
+import CONFIG from '../config/config'
 
 class Services extends React.Component
 {
 	state = {
-		config:   CONFIG,
+		config:     CONFIG,
 		provider: null,
 		ens:      null,
 		fifs:     null,
@@ -21,8 +21,9 @@ class Services extends React.Component
 	{
 		await window.ethereum.enable();
 		const provider = new ethers.providers.Web3Provider(window.web3.currentProvider);
-		const ens      = new ethers.Contract('0x314159265dd8dbb310642f98f50c066173c1259b', ENS.abi,  provider);
-		const fifs     = new ethers.Contract('0x1ec34ddd6bdffbf83a6e2528ebfa66abd6bf0669', FIFS.abi, provider.getSigner());
+		const ens      = new ethers.Contract('0x314159265dd8dbb310642f98f50c066173c1259b', ENS.abi, provider);
+		const owner    = await ens.owner(ethers.utils.namehash(CONFIG.domain))
+		const fifs     = new ethers.Contract(owner, FIFS.abi, provider.getSigner());
 		this.setState({ provider, ens, fifs, ready: true })
 	}
 

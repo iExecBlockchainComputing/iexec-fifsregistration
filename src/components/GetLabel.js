@@ -27,7 +27,7 @@ class GetLabel extends React.Component
 			}
 			else
 			{
-				const name = `${label}.${this.props.context.config.root}`
+				const name = `${label}.${this.props.context.config.domain}`
 				const node = ethers.utils.namehash(name)
 				this.props.context.ens.owner(node)
 				.then(owner => {
@@ -69,7 +69,7 @@ class GetLabel extends React.Component
 										material
 										hint='username'
 										onChange={ this.handleChange.bind(this) }
-										append={ `.${this.props.context.config.root}` }
+										append={ `.${this.props.context.config.domain}` }
 									/>
 									<MDBBtn type='submit' color='dark'>Claim</MDBBtn>
 								</form>

@@ -28,13 +28,13 @@ code
 }
 #getLabel:not(.valid) input
 {
-	border-width: 2px;
+	border-width: 1px;
 	border-color: #ff4444;
 	box-shadow: none;
 }
 #getLabel.valid input
 {
-	border-width: 2px;
+	border-width: 1px;
 	border-color: #00C851;
 	box-shadow: none;
 }

@@ -45,7 +45,7 @@ class Process extends React.Component
 									<h2>Congratulation</h2>
 								</MDBCardImage>
 								<MDBCardBody>
-									You can know manage your ens name <a href={ `https://manager.ens.domains/name/${this.props.match.params.label}.${this.props.context.config.root}` }>here</a>
+									You can know manage your ens name <a href={ `https://manager.ens.domains/name/${this.props.match.params.label}.${this.props.context.config.domain}` }>here</a>
 								</MDBCardBody>
 							</MDBCard>
 						</MDBCol>

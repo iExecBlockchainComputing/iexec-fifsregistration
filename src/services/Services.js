@@ -1,16 +1,15 @@
 import React from "react";
 import { ethers } from 'ethers';
 
-import Context    from '../context';
-
-import ENS  from '@ensdomains/ens/build/contracts/ENS.json'
-import FIFS from '@ensdomains/ens/build/contracts/FIFSRegistrar.json'
-import CONFIG from '../config/config'
+import Context from '../context';
+import CONFIG  from '../config/config'
+import ENS     from '@ensdomains/ens/build/contracts/ENS.json'
+import FIFS    from '@ensdomains/ens/build/contracts/FIFSRegistrar.json'
 
 class Services extends React.Component
 {
 	state = {
-		config:     CONFIG,
+		config:   CONFIG,
 		provider: null,
 		ens:      null,
 		fifs:     null,

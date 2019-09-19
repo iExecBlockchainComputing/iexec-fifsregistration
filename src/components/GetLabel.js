@@ -42,7 +42,7 @@ class GetLabel extends React.Component
 		event.preventDefault()
 		this.checkAvailability(this.state.label)
 		.then((label) => {
-			this.props.history.push(`/${label}`)
+			this.props.history.push(`/iexec-fifsregistration/${label}`)
 		})
 		.catch(() => console.error('invalid label'))
 	}

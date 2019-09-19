@@ -18,9 +18,9 @@ class App extends React.Component
 					{
 						context =>
 							<Router>
-								<Route exact path='/'             render={ (props) => <GetLabel context={context} {...props}/> }/>
-								<Route exact path='/:label'       render={ (props) => <GetAddr  context={context} {...props}/> }/>
-								<Route exact path='/:label/:addr' render={ (props) => <Process  context={context} {...props}/> }/>
+								<Route exact path='/iexec-fifsregistration/'             render={ (props) => <GetLabel context={context} {...props}/> }/>
+								<Route exact path='/iexec-fifsregistration/:label'       render={ (props) => <GetAddr  context={context} {...props}/> }/>
+								<Route exact path='/iexec-fifsregistration/:label/:addr' render={ (props) => <Process  context={context} {...props}/> }/>
 							</Router>
 					}
 				</Context.Consumer>

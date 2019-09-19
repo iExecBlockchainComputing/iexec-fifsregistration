@@ -19,7 +19,10 @@ class Process extends React.Component
 
 	componentDidMount()
 	{
-		this.props.context.fifs.register(
+		this.props.context.regprox.registerENS(
+			this.props.context.ens.address,
+			this.props.context.config.registration.resolver,
+			ethers.utils.namehash(this.props.context.config.domain),
 			ethers.utils.solidityKeccak256(['string'], [this.props.match.params.label]),
 			this.props.match.params.addr,
 		)

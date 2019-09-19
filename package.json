@@ -2,7 +2,7 @@
   "name": "iexec-fifsregistration",
   "version": "0.1.0",
   "private": true,
-  "homepage": "//iexecregistration.app.hadriencroubois.com/",
+  "homepage": ".",
 	"dependencies": {
     "@babel/runtime": "^7.6.0",
     "@ensdomains/ens": "^0.3.11",

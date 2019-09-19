@@ -42,7 +42,7 @@ class GetAddr extends React.Component
 		{
 			this.resolveAddress(addr)
 			.then(address => {
-				this.props.history.push(`/iexec-fifsregistration/${this.props.match.params.label}/${address}`)
+				this.props.history.push(`/${this.props.match.params.label}/${address}`)
 			})
 			.catch(() => {
 				console.error(`'${addr}' is not an ethereum address`)

@@ -2,7 +2,7 @@
   "name": "iexec-fifsregistration",
   "version": "0.1.0",
   "private": true,
-  "homepage": "//app.hadriencroubois.com/iexec-fifsregistration/",
+  "homepage": "//iexecregistration.app.hadriencroubois.com/",
 	"dependencies": {
     "@babel/runtime": "^7.6.0",
     "@ensdomains/ens": "^0.3.11",
@@ -24,7 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "rsync -avz --delete build/* maia:/srv/http/webapps/iexec-fifsregistration/."
+    "deploy": "rsync -avz --delete build/* maia:/srv/http/apps/iexecregistration/."
   },
   "eslintConfig": {
     "extends": "react-app"

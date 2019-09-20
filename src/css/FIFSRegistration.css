@@ -19,6 +19,10 @@ button
 {
 	text-align: right;
 }
+.hidden
+{
+	display: none;
+}
 
 .FIFSRegistration
 {
@@ -33,7 +37,7 @@ button
 .FIFSRegistration form
 {
 	display:         flex;
-	height:          360px;
+	height:          260px;
 	width:           340px;
 	text-align:      center;
 	flex-direction:  column;
@@ -71,21 +75,36 @@ button
 {
 	border-bottom: 1px solid #ff4444;
 }
-.FIFSRegistration form button
+.FIFSRegistration form button[type=submit]
 {
+	cursor:           pointer;
 	color:            #ffffff;
 	background-color: #212121;
 }
-.FIFSRegistration form:not(.valid) button
+.FIFSRegistration form:not(.valid) button[type=submit]
 {
-	background-color: #545454;
 	cursor:           not-allowed;
 	pointer-events:   none;
+	background-color: #545454;
 }
 
-.FIFSRegistration video
+.FIFSRegistration form video
 {
 	width:            320px;
 	height:           240px;
 	background-color: #cccccc;
+}
+
+
+
+.FIFSRegistration form button
+{
+	cursor:           pointer;
+	color:            #ffffff;
+	background-color: #212121;
+}
+.FIFSRegistration form button img
+{
+	margin: -.4rem;
+	height: 1.4rem;
 }

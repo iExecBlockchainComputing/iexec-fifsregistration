@@ -2,16 +2,31 @@ import React from 'react';
 import { ethers } from 'ethers'
 import Instascan from '@eventstag/instascan';
 
+import camera from '../assets/camera.svg';
+
 const ADDR = /0x[0-9a-zA-Z]{40}/
 
 class GetAddr extends React.Component
 {
-	state = { scanner: null, addr: "", valid: false }
+	state = { preview: false, scanner: null, addr: "", valid: false }
 
 	componentDidMount()
 	{
+	}
+
+	componentWillUnmount()
+	{
+		if (this.state.scanner)
+		{
+			this.state.scanner.stop()
+		}
+	}
+
+	start()
+	{
 		Instascan.Camera.getCameras()
 		.then(cameras => {
+			this.setState({ preview: true })
 			let scanner = new Instascan.Scanner({ video: document.getElementById('preview') })
 			scanner.addListener('scan', this.process.bind(this))
 			scanner.start(cameras[0])
@@ -19,11 +34,6 @@ class GetAddr extends React.Component
 			.catch(console.error)
 		})
 		.catch(console.error)
-	}
-
-	componentWillUnmount()
-	{
-		this.state.scanner.stop()
 	}
 
 	checkValidity(addr)
@@ -74,16 +84,21 @@ class GetAddr extends React.Component
 	{
 		return (
 			<form onSubmit={ this.submit.bind(this) } className={ this.state.valid ? 'valid' : '' }>
-				<video id='preview'/>
-				<div className='inputgroup'>
-					<input
-						placeholder='ethereum address'
-						onChange={ this.handleChange.bind(this) }
-					/>
+				<video id='preview' className={ this.state.preview ? '': 'hidden' }/>
+				<div className={ !this.state.preview ? '': 'hidden' }>
+					<div className='inputgroup'>
+						<input
+							placeholder='ethereum address'
+							onChange={ this.handleChange.bind(this) }
+						/>
+					</div>
+					<button type='submit'>
+						Go
+					</button>
+					<button onClick={ this.start.bind(this) }>
+						<img alt="qrcode" src={ camera }/>
+					</button>
 				</div>
-				<button type='submit'>
-					Go
-				</button>
 			</form>
 		);
 	}

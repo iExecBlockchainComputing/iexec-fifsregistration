@@ -1,5 +1,6 @@
 import React from "react";
-import { MemoryRouter as Router, Route } from 'react-router-dom';
+// import { MemoryRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { ethers } from 'ethers';
 
 import GetLabel from './GetLabel';

@@ -1,0 +1,91 @@
+button
+{
+	display:        inline-block;
+	font-weight:    400;
+	text-align:     center;
+	text-transform: uppercase;
+	vertical-align: middle;
+	word-wrap:      break-word;
+	white-space:    normal;
+	border:         0;
+	border-radius:  .125rem;
+	box-shadow:     0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+	padding:        .5rem 2.5rem;
+	margin:         .5rem;
+	transition:     color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.align-right
+{
+	text-align: right;
+}
+
+.FIFSRegistration
+{
+	text-align:      center;
+	display:         flex;
+	flex-direction:  column;
+	height:          100vh;
+	width:           100vw;
+	align-items:     center;
+	justify-content: center;
+}
+.FIFSRegistration form
+{
+	display:         flex;
+	height:          360px;
+	width:           340px;
+	text-align:      center;
+	flex-direction:  column;
+	align-items:     center;
+	justify-content: center;
+	size:            1.25rem;
+	box-shadow:      0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+	padding:         10px;
+}
+.FIFSRegistration form .inputgroup
+{
+	display: flex;
+	width:   calc(320px - 1rem);
+	padding: 0 .5rem;
+	margin:  .5rem;
+}
+.FIFSRegistration form input
+{
+	width:  100%;
+	border: none;
+}
+.FIFSRegistration form .input-append
+{
+	text-align: left;
+}
+.FIFSRegistration form .input-append::before
+{
+	content: '.';
+}
+.FIFSRegistration form.valid .inputgroup
+{
+	border-bottom: 1px solid #00c851;
+}
+.FIFSRegistration form:not(.valid) .inputgroup
+{
+	border-bottom: 1px solid #ff4444;
+}
+.FIFSRegistration form button
+{
+	color:            #ffffff;
+	background-color: #212121;
+}
+.FIFSRegistration form:not(.valid) button
+{
+	background-color: #545454;
+	cursor:           not-allowed;
+	pointer-events:   none;
+}
+
+.FIFSRegistration video
+{
+	width:            320px;
+	height:           240px;
+	background-color: #cccccc;
+}

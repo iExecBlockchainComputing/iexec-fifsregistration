@@ -1,26 +1,32 @@
 import React from 'react';
-
-import {
-	MDBBtn,
-	MDBInputGroup,
-	MDBContainer,
-	MDBRow,
-	MDBCol,
-	MDBCard,
-	MDBCardBody,
-} from 'mdbreact';
-
 import { ethers } from 'ethers'
-
-import Scanner from './Scanner';
+import Instascan from '@eventstag/instascan';
 
 const ADDR = /0x[0-9a-zA-Z]{40}/
 
 class GetAddr extends React.Component
 {
-	state = { addr: "" }
+	state = { scanner: null, addr: "", valid: false }
 
-	resolveAddress(addr)
+	componentDidMount()
+	{
+		Instascan.Camera.getCameras()
+		.then(cameras => {
+			let scanner = new Instascan.Scanner({ video: document.getElementById('preview') })
+			scanner.addListener('scan', this.process.bind(this))
+			scanner.start(cameras[0])
+			.then(() => this.setState({ scanner }))
+			.catch(console.error)
+		})
+		.catch(console.error)
+	}
+
+	componentWillUnmount()
+	{
+		this.state.scanner.stop()
+	}
+
+	checkValidity(addr)
 	{
 		return new Promise((resolve, reject) => {
 			try
@@ -40,7 +46,7 @@ class GetAddr extends React.Component
 	{
 		if (addr)
 		{
-			this.resolveAddress(addr)
+			this.checkValidity(addr)
 			.then(address => {
 				this.props.history.push(`/${this.props.match.params.label}/${address}`)
 			})
@@ -59,30 +65,26 @@ class GetAddr extends React.Component
 	handleChange(ev)
 	{
 		this.setState({ addr: ev.target.value })
+		this.checkValidity(ev.target.value)
+		.then (() => { this.setState({ valid: true  }) })
+		.catch(() => { this.setState({ valid: false }) })
 	}
 
 	render()
 	{
 		return (
-			<MDBContainer id="getAddr">
-				<MDBRow center>
-					<MDBCol>
-						<MDBCard className='z-depth-5'>
-							<Scanner callback={ this.process.bind(this) }/>
-							<MDBCardBody>
-								<form onSubmit={ this.submit.bind(this) }>
-									<MDBInputGroup
-										material
-										hint='Your ethereum address'
-										onChange={ this.handleChange.bind(this) }
-										append={ <MDBBtn type='submit' color='dark'>Go</MDBBtn> }
-									/>
-								</form>
-							</MDBCardBody>
-						</MDBCard>
-					</MDBCol>
-				</MDBRow>
-			</MDBContainer>
+			<form onSubmit={ this.submit.bind(this) } className={ this.state.valid ? 'valid' : '' }>
+				<video id='preview'/>
+				<div className='inputgroup'>
+					<input
+						placeholder='ethereum address'
+						onChange={ this.handleChange.bind(this) }
+					/>
+				</div>
+				<button type='submit'>
+					Go
+				</button>
+			</form>
 		);
 	}
 }

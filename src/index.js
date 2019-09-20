@@ -1,15 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as serviceWorker from './services/serviceWorker';
+import * as serviceWorker from './serviceWorker';
+import './index.css';
 
-import App from './components/App';
+import FIFSRegistration from './components/FIFSRegistration';
+import './css/FIFSRegistration.css';
 
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import 'bootstrap-css-only/css/bootstrap.min.css';
-import 'mdbreact/dist/css/mdb.css';
-import './css/index.css';
+import CONFIG  from './config/config'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+	<FIFSRegistration
+		web3={window.ethereum}
+		config={CONFIG}
+	/>,
+	document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

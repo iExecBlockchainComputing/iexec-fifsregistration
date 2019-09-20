@@ -1,17 +1,5 @@
 import React from 'react';
-
-import {
-	MDBContainer,
-	MDBRow,
-	MDBCol,
-	MDBCard,
-	MDBCardImage,
-	MDBCardBody,
-} from 'mdbreact';
-
 import { ethers } from 'ethers'
-
-import Loading from './Loading';
 
 class Process extends React.Component
 {
@@ -19,9 +7,9 @@ class Process extends React.Component
 
 	componentDidMount()
 	{
-		this.props.context.regprox.registerENS(
+		this.props.context.proxy.registerENS(
 			this.props.context.ens.address,
-			this.props.context.config.registration.resolver,
+			this.props.context.config.resolver,
 			ethers.utils.namehash(this.props.context.config.domain),
 			ethers.utils.solidityKeccak256(['string'], [this.props.match.params.label]),
 			this.props.match.params.addr,
@@ -32,32 +20,21 @@ class Process extends React.Component
 		.catch(console.error)
 	}
 
+	componentWillUnmount()
+	{
+	}
+
 	render()
 	{
 		return (
 			this.state.done
 			?
-				<MDBContainer id="getAddr">
-					<MDBRow center>
-						<MDBCol>
-							<MDBCard className='z-depth-5'>
-								<MDBCardImage
-									className='black white-text d-flex justify-content-center align-items-center flex-column p-4 rounded-top'
-									tag='div'
-								>
-									<h2>Congratulation</h2>
-								</MDBCardImage>
-								<MDBCardBody>
-									You can know manage your ens name <a href={ `https://manager.ens.domains/name/${this.props.match.params.label}.${this.props.context.config.domain}` }>here</a>
-								</MDBCardBody>
-							</MDBCard>
-						</MDBCol>
-					</MDBRow>
-				</MDBContainer>
+				<div className='success'/>
 			:
-				<Loading/>
+				<div className='loading'/>
 		);
 	}
 }
+// <a href={ `https://manager.ens.domains/name/${this.props.match.params.label}.${this.props.context.config.domain}` }/>
 
 export default Process;

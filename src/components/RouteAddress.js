@@ -6,7 +6,7 @@ import camera from '../assets/camera.svg'
 
 const ADDR = /0x[0-9a-zA-Z]{40}/
 
-class GetAddr extends React.Component
+class RouteAddress extends React.Component
 {
 	state = { preview: false, scanner: null, addr: "", valid: false }
 
@@ -100,4 +100,4 @@ class GetAddr extends React.Component
 	}
 }
 
-export default GetAddr
+export default RouteAddress

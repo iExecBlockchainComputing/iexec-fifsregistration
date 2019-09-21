@@ -3,7 +3,7 @@ import { ethers } from 'ethers'
 
 import Loading from './Loading'
 
-class Process extends React.Component
+class RouteProcess extends React.Component
 {
 	state = { done: false }
 
@@ -32,4 +32,4 @@ class Process extends React.Component
 	}
 }
 
-export default Process
+export default RouteProcess

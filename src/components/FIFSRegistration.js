@@ -2,9 +2,11 @@ import React from "react"
 import { MemoryRouter as Router, Route, Redirect } from 'react-router-dom'
 import { ethers } from 'ethers'
 
-import GetLabel from './GetLabel'
-import GetAddr  from './GetAddr'
-import Process  from './Process'
+import RouteLabel   from './RouteLabel'
+import RouteAddress from './RouteAddress'
+import RouteProcess from './RouteProcess'
+import RouteSuccess from './RouteSuccess'
+import RouteFailure from './RouteFailure'
 
 const ABI = {
 	ens:   [{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}],
@@ -15,18 +17,19 @@ class FIFSRegistration extends React.Component
 {
 	state = {
 		config:   this.props.config,
-		path:     '/loading',
+		ethereum: this.props.ethereum || window.ethereum,
 		provider: null,
 		ens:      null,
 		proxy:    null,
+		enabled:  false,
 	}
 
 	enable()
 	{
 		return new Promise((resolve, reject) => {
-			if (this.props.web3.enable)
+			if (this.state.ethereum.enable)
 			{
-				this.props.web3.enable().then(resolve, reject)
+				this.state.ethereum.enable().then(resolve, reject)
 			}
 			else
 			{
@@ -39,46 +42,56 @@ class FIFSRegistration extends React.Component
 	{
 		this.enable()
 		.then(() => {
-			const provider = new ethers.providers.Web3Provider(this.props.web3)
+			const provider = new ethers.providers.Web3Provider(this.state.ethereum)
 			provider.ready.then(network => {
 				this.setState({
 					provider,
-					ens:   new ethers.Contract(this.state.config.ensAddress || network.ensAddress, ABI.ens, provider),
-					proxy: new ethers.Contract(this.state.config.proxy, ABI.proxy, provider.getSigner()),
-					path:  '/label',
+					ens:     new ethers.Contract(this.state.config.ensAddress || network.ensAddress, ABI.ens, provider),
+					proxy:   new ethers.Contract(this.state.config.proxy, ABI.proxy, provider.getSigner()),
+					enabled: true,
 				})
 			})
 		})
 	}
 
-	setLabel(label)
+	setLabel(history, label)
 	{
-		this.setState({ label, path: '/address' })
+		this.setState({ label })
+		history.push('/address')
 	}
 
-	setAddress(address)
+	setAddress(history, address)
 	{
-		this.setState({ address, path: '/process' })
+		this.setState({ address })
+		history.push('/process')
 	}
 
-	finalize(success)
+	finalize(history, success)
 	{
-		this.setState({ path: success ? '/success' : '/failure' })
+		history.push(success ? '/success' : '/failure')
 	}
-
 
 	render()
 	{
 		return (
 			<div className='FIFSRegistration'>
 				<Router>
-					<Redirect exact from='/' to={ this.state.path } />
-					<Route exact path='/loading' render={ (props) => null } />
-					<Route exact path='/label'   render={ (props) => <GetLabel context={this.state} callback={ this.setLabel.bind(this)   } {...props}/> } />
-					<Route exact path='/address' render={ (props) => <GetAddr  context={this.state} callback={ this.setAddress.bind(this) } {...props}/> } />
-					<Route exact path='/process' render={ (props) => <Process  context={this.state} callback={ this.finalize.bind(this)   } {...props}/> } />
-					<Route exact path='/success' render={ (props) => null } />
-					<Route exact path='/failure' render={ (props) => null } />
+				{
+					this.state.enabled
+					?
+						<>
+							<Redirect exact from='/' to='/label' />
+							<Route exact path='/label'   render={ (props) => <RouteLabel   context={this.state} callback={ this.setLabel.bind(this, props.history)   } {...props}/> } />
+							<Route exact path='/address' render={ (props) => <RouteAddress context={this.state} callback={ this.setAddress.bind(this, props.history) } {...props}/> } />
+							<Route exact path='/process' render={ (props) => <RouteProcess context={this.state} callback={ this.finalize.bind(this, props.history)   } {...props}/> } />
+							<Route exact path='/success' render={ (props) => <RouteSuccess context={this.state}                                                        {...props}/> } />
+							<Route exact path='/failure' render={ (props) => <RouteFailure context={this.state}                                                        {...props}/> } />
+						</>
+					:
+						<>
+							<Route exact path='/' render={ (props) => null } />
+						</>
+				}
 				</Router>
 			</div>
 		)

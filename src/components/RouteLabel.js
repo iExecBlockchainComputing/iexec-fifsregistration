@@ -1,7 +1,7 @@
 import React from 'react'
 import { ethers } from 'ethers'
 
-class GetLabel extends React.Component
+class RouteLabel extends React.Component
 {
 	state = { label: "", valid: false }
 
@@ -70,4 +70,4 @@ class GetLabel extends React.Component
 	}
 }
 
-export default GetLabel
+export default RouteLabel

@@ -1,10 +1,10 @@
-import React from "react";
-import { MemoryRouter as Router, Route } from 'react-router-dom';
-import { ethers } from 'ethers';
+import React from "react"
+import { MemoryRouter as Router, Route, Redirect } from 'react-router-dom'
+import { ethers } from 'ethers'
 
-import GetLabel from './GetLabel';
-import GetAddr  from './GetAddr';
-import Process  from './Process';
+import GetLabel from './GetLabel'
+import GetAddr  from './GetAddr'
+import Process  from './Process'
 
 const ABI = {
 	ens:   [{"constant":true,"inputs":[{"name":"node","type":"bytes32"}],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}],
@@ -15,10 +15,10 @@ class FIFSRegistration extends React.Component
 {
 	state = {
 		config:   this.props.config,
+		path:     '/loading',
 		provider: null,
 		ens:      null,
 		proxy:    null,
-		ready:    false,
 	}
 
 	enable()
@@ -26,11 +26,11 @@ class FIFSRegistration extends React.Component
 		return new Promise((resolve, reject) => {
 			if (this.props.web3.enable)
 			{
-				this.props.web3.enable().then(resolve, reject);
+				this.props.web3.enable().then(resolve, reject)
 			}
 			else
 			{
-				resolve();
+				resolve()
 			}
 		})
 	}
@@ -39,35 +39,50 @@ class FIFSRegistration extends React.Component
 	{
 		this.enable()
 		.then(() => {
-			const provider = new ethers.providers.Web3Provider(this.props.web3);
+			const provider = new ethers.providers.Web3Provider(this.props.web3)
 			provider.ready.then(network => {
 				this.setState({
 					provider,
-					ens: new ethers.Contract(this.state.config.ensAddress || network.ensAddress, ABI.ens, provider),
+					ens:   new ethers.Contract(this.state.config.ensAddress || network.ensAddress, ABI.ens, provider),
 					proxy: new ethers.Contract(this.state.config.proxy, ABI.proxy, provider.getSigner()),
-					ready: true })
+					path:  '/label',
+				})
 			})
 		})
 	}
+
+	setLabel(label)
+	{
+		this.setState({ label, path: '/address' })
+	}
+
+	setAddress(address)
+	{
+		this.setState({ address, path: '/process' })
+	}
+
+	finalize(success)
+	{
+		this.setState({ path: success ? '/success' : '/failure' })
+	}
+
 
 	render()
 	{
 		return (
 			<div className='FIFSRegistration'>
-				{
-					this.state.ready
-					?
-						<Router>
-							<Route exact path='/'             render={ (props) => <GetLabel context={this.state} {...props}/> }/>
-							<Route exact path='/:label'       render={ (props) => <GetAddr  context={this.state} {...props}/> }/>
-							<Route exact path='/:label/:addr' render={ (props) => <Process  context={this.state} {...props}/> }/>
-						</Router>
-					:
-						<div className='connecting'/>
-				}
+				<Router>
+					<Redirect exact from='/' to={ this.state.path } />
+					<Route exact path='/loading' render={ (props) => null } />
+					<Route exact path='/label'   render={ (props) => <GetLabel context={this.state} callback={ this.setLabel.bind(this)   } {...props}/> } />
+					<Route exact path='/address' render={ (props) => <GetAddr  context={this.state} callback={ this.setAddress.bind(this) } {...props}/> } />
+					<Route exact path='/process' render={ (props) => <Process  context={this.state} callback={ this.finalize.bind(this)   } {...props}/> } />
+					<Route exact path='/success' render={ (props) => null } />
+					<Route exact path='/failure' render={ (props) => null } />
+				</Router>
 			</div>
-		);
-	};
+		)
+	}
 }
 
-export default FIFSRegistration;
+export default FIFSRegistration

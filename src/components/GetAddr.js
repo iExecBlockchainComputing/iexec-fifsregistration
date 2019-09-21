@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 import { ethers } from 'ethers'
-import Instascan from '@eventstag/instascan';
+import Instascan from '@eventstag/instascan'
 
-import camera from '../assets/camera.svg';
+import camera from '../assets/camera.svg'
 
 const ADDR = /0x[0-9a-zA-Z]{40}/
 
@@ -57,12 +57,8 @@ class GetAddr extends React.Component
 		if (addr)
 		{
 			this.checkValidity(addr)
-			.then(address => {
-				this.props.history.push(`/${this.props.match.params.label}/${address}`)
-			})
-			.catch(() => {
-				console.error(`'${addr}' is not an ethereum address`)
-			})
+			.then(this.props.callback)
+			.catch(() => console.error(`'${addr}' is not an ethereum address`))
 		}
 	}
 
@@ -100,8 +96,8 @@ class GetAddr extends React.Component
 					</button>
 				</div>
 			</form>
-		);
+		)
 	}
 }
 
-export default GetAddr;
+export default GetAddr

@@ -1,5 +1,7 @@
-import React from 'react';
+import React from 'react'
 import { ethers } from 'ethers'
+
+import Loading from './Loading'
 
 class Process extends React.Component
 {
@@ -11,13 +13,11 @@ class Process extends React.Component
 			this.props.context.ens.address,
 			this.props.context.config.resolver,
 			ethers.utils.namehash(this.props.context.config.domain),
-			ethers.utils.solidityKeccak256(['string'], [this.props.match.params.label]),
-			this.props.match.params.addr,
+			ethers.utils.solidityKeccak256(['string'], [this.props.context.label]),
+			this.props.context.address,
 		)
-		.then(() => {
-			this.setState({ done: true })
-		})
-		.catch(console.error)
+		.then(() => this.props.callback(true))
+		.catch(() => this.props.callback(false))
 	}
 
 	componentWillUnmount()
@@ -27,14 +27,9 @@ class Process extends React.Component
 	render()
 	{
 		return (
-			this.state.done
-			?
-				<div className='success'/>
-			:
-				<div className='loading'/>
-		);
+			<Loading/>
+		)
 	}
 }
-// <a href={ `https://manager.ens.domains/name/${this.props.match.params.label}.${this.props.context.config.domain}` }/>
 
-export default Process;
+export default Process

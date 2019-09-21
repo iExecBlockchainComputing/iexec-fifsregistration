@@ -1,4 +1,4 @@
-#Loading
+.loading
 {
 	display:          flex;
 	position:         fixed;
@@ -9,10 +9,12 @@
 	justify-content:  center;
 	z-index:          999999;
 }
-#Loading .path
+
+.loading .path
 {
 	animation: spinner 1.5s infinite;
 }
+
 @keyframes spinner
 {
 	50%

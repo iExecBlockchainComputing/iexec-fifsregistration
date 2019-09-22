@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 import { ethers } from 'ethers'
 
-class GetLabel extends React.Component
+class RouteLabel extends React.Component
 {
 	state = { label: "", valid: false }
 
@@ -36,9 +36,7 @@ class GetLabel extends React.Component
 	{
 		event.preventDefault()
 		this.checkValidity(this.state.label)
-		.then((label) => {
-			this.props.history.push(`/${label}`)
-		})
+		.then(this.props.callback)
 		.catch(() => console.error('invalid label'))
 	}
 
@@ -53,7 +51,7 @@ class GetLabel extends React.Component
 	render()
 	{
 		return (
-			<form id='getLabel' onSubmit={ this.submit.bind(this) } className={ this.state.valid ? 'valid' : '' }>
+			<form onSubmit={ this.submit.bind(this) } className={ this.state.valid ? 'valid' : '' }>
 				<div className='inputgroup'>
 					<input
 						className='align-right'
@@ -68,8 +66,8 @@ class GetLabel extends React.Component
 					Claim
 				</button>
 			</form>
-		);
+		)
 	}
 }
 
-export default GetLabel;
+export default RouteLabel

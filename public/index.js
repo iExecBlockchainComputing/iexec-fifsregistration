@@ -9,7 +9,7 @@ import CONFIG  from './config'
 
 ReactDOM.render(
 	<FIFSRegistration
-		web3={window.ethereum}
+		ethereum={window.ethereum}
 		config={CONFIG}
 	/>,
 	document.getElementById('root')

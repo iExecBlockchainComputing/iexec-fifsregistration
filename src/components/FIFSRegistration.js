@@ -1,5 +1,6 @@
 import React from "react"
-import { MemoryRouter as Router, Route, Redirect } from 'react-router-dom'
+import { Router, Route } from 'react-router-dom'
+import { createBrowserHistory } from "history"
 import { ethers } from 'ethers'
 
 import RouteLabel   from './RouteLabel'
@@ -17,11 +18,17 @@ class FIFSRegistration extends React.Component
 {
 	state = {
 		config:   this.props.config,
+		root:     this.props.root || '',
+		history:  createBrowserHistory(),
 		ethereum: this.props.ethereum || window.ethereum,
 		provider: null,
 		ens:      null,
 		proxy:    null,
-		enabled:  false,
+	}
+
+	goTo(route)
+	{
+		this.state.history.push(`${this.state.root}/${route}`)
 	}
 
 	enable()
@@ -44,52 +51,54 @@ class FIFSRegistration extends React.Component
 		.then(() => {
 			const provider = new ethers.providers.Web3Provider(this.state.ethereum)
 			provider.ready.then(network => {
-				this.setState({
-					provider,
-					ens:     new ethers.Contract(this.state.config.ensAddress || network.ensAddress, ABI.ens, provider),
-					proxy:   new ethers.Contract(this.state.config.proxy, ABI.proxy, provider.getSigner()),
-					enabled: true,
-				})
+				this.setState(
+					{
+						provider,
+						ens:     new ethers.Contract(this.state.config.ensAddress || network.ensAddress, ABI.ens, provider),
+						proxy:   new ethers.Contract(this.state.config.proxy, ABI.proxy, provider.getSigner()),
+					},
+					// () => this.goTo(this.state.history.location.pathname.substr(1) || 'label') // Dangerous, state will not be set
+					() => this.goTo('label')
+				)
 			})
 		})
 	}
 
-	setLabel(history, label)
+	getLabel(label)
 	{
 		this.setState({ label })
-		history.push('/address')
+		this.goTo('address')
 	}
 
-	setAddress(history, address)
+	getAddress(address)
 	{
 		this.setState({ address })
-		history.push('/process')
+		this.goTo('process')
 	}
 
-	finalize(history, success)
+	getProcess(success)
 	{
-		history.push(success ? '/success' : '/failure')
+		this.goTo(success ? 'success' : 'failure')
 	}
 
 	render()
 	{
 		return (
 			<div className='FIFSRegistration'>
-				<Router>
+				<Router history={this.state.history}>
 				{
-					this.state.enabled
+					this.state.provider
 					?
 						<>
-							<Redirect exact from='/' to='/label' />
-							<Route exact path='/label'   render={ (props) => <RouteLabel   context={this.state} callback={ this.setLabel.bind(this, props.history)   } {...props}/> } />
-							<Route exact path='/address' render={ (props) => <RouteAddress context={this.state} callback={ this.setAddress.bind(this, props.history) } {...props}/> } />
-							<Route exact path='/process' render={ (props) => <RouteProcess context={this.state} callback={ this.finalize.bind(this, props.history)   } {...props}/> } />
-							<Route exact path='/success' render={ (props) => <RouteSuccess context={this.state}                                                        {...props}/> } />
-							<Route exact path='/failure' render={ (props) => <RouteFailure context={this.state}                                                        {...props}/> } />
+							<Route exact path={ `${this.state.root}/label`   } render={ (props) => <RouteLabel   context={this.state} callback={ this.getLabel.bind(this)   } {...props}/> } />
+							<Route exact path={ `${this.state.root}/address` } render={ (props) => <RouteAddress context={this.state} callback={ this.getAddress.bind(this) } {...props}/> } />
+							<Route exact path={ `${this.state.root}/process` } render={ (props) => <RouteProcess context={this.state} callback={ this.getProcess.bind(this) } {...props}/> } />
+							<Route exact path={ `${this.state.root}/success` } render={ (props) => <RouteSuccess context={this.state}                                         {...props}/> } />
+							<Route exact path={ `${this.state.root}/failure` } render={ (props) => <RouteFailure context={this.state}                                         {...props}/> } />
 						</>
 					:
 						<>
-							<Route exact path='/' render={ (props) => null } />
+							<Route exact path={ `${this.state.root}/`        } render={ (props) => null } />
 						</>
 				}
 				</Router>

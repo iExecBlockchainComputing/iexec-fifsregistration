@@ -36,9 +36,15 @@ button
 	text-align:      center;
 	height:          360px;
 	width:           360px;
-	size:            1.25rem;
 	box-shadow:      0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
 	padding:         10px;
+}
+.FIFSRegistration,
+.FIFSRegistration form input,
+.FIFSRegistration form label
+{
+	font-family: "Roboto", sans-serif;
+	font-size:   1.25rem;
 }
 
 /*****************************************************************************

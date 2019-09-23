@@ -45,9 +45,9 @@ button
 	display: flex;
 	width:   calc(360px - 20px - 1rem);
 	padding: 0 .5rem;
-	margin:  .5rem;
+	margin:  .5rem 0;
 }
-.FIFSRegistration form .inputgroup *
+.FIFSRegistration form .inputgroup *:not(:only-child)
 {
 	width: 50%;
 }

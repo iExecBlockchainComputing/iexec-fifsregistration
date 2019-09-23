@@ -5,7 +5,7 @@ class RouteSuccess extends React.Component
 	render()
 	{
 		return (
-			null
+			<div>RouteSuccess</div>
 		)
 	}
 }

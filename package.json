@@ -2,6 +2,7 @@
   "name": "iexec-username",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/react/ens-registration",
   "dependencies": {
     "@babel/runtime": "^7.6.0",
     "@ensdomains/ens": "^0.3.11",

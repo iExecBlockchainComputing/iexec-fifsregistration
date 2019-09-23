@@ -1,13 +1,13 @@
 import React from 'react'
 
-class Failure extends React.Component
+class RouteFailure extends React.Component
 {
 	render()
 	{
 		return (
-			null
+			<div>RouteFailure</div>
 		)
 	}
 }
 
-export default Failure
+export default RouteFailure

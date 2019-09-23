@@ -1,8 +1,10 @@
 import React from "react"
 import { Router, Route } from 'react-router-dom'
-import { createBrowserHistory } from "history"
+import { createMemoryHistory } from 'history'
 import { ethers } from 'ethers'
 
+import RouteConnect from './RouteConnect'
+import RouteError   from './RouteError'
 import RouteLabel   from './RouteLabel'
 import RouteAddress from './RouteAddress'
 import RouteProcess from './RouteProcess'
@@ -19,16 +21,16 @@ class FIFSRegistration extends React.Component
 	state = {
 		config:   this.props.config,
 		root:     this.props.root || '',
-		history:  createBrowserHistory(),
+		history:  createMemoryHistory(),
 		ethereum: this.props.ethereum || window.ethereum,
 		provider: null,
 		ens:      null,
 		proxy:    null,
 	}
 
-	goTo(route)
+	goTo(route, args = {})
 	{
-		this.state.history.push(`${this.state.root}/${route}`)
+		this.setState(args, () => { this.state.history.push(`${this.state.root}/${route}`) })
 	}
 
 	enable()
@@ -36,7 +38,7 @@ class FIFSRegistration extends React.Component
 		return new Promise((resolve, reject) => {
 			if (this.state.ethereum.enable)
 			{
-				this.state.ethereum.enable().then(resolve, reject)
+				this.state.ethereum.enable().then(resolve).catch(reject)
 			}
 			else
 			{
@@ -51,29 +53,36 @@ class FIFSRegistration extends React.Component
 		.then(() => {
 			const provider = new ethers.providers.Web3Provider(this.state.ethereum)
 			provider.ready.then(network => {
-				this.setState(
-					{
-						provider,
-						ens:     new ethers.Contract(this.state.config.ensAddress || network.ensAddress, ABI.ens, provider),
-						proxy:   new ethers.Contract(this.state.config.proxy, ABI.proxy, provider.getSigner()),
-					},
-					// () => this.goTo(this.state.history.location.pathname.substr(1) || 'label') // Dangerous, state will not be set
-					() => this.goTo('label')
-				)
+				try
+				{
+					this.setState(
+						{
+							provider,
+							ens:     new ethers.Contract(this.state.config.ensAddress || network.ensAddress, ABI.ens, provider),
+							proxy:   new ethers.Contract(this.state.config.proxy, ABI.proxy, provider.getSigner()),
+						},
+						() => this.goTo('label')
+					)
+				}
+				catch
+				{
+					this.goTo('error', { error: 'ENS is not available on this network' })
+				}
 			})
+		})
+		.catch(() => {
+			this.goTo('error', { error: 'Connection refused' })
 		})
 	}
 
 	getLabel(label)
 	{
-		this.setState({ label })
-		this.goTo('address')
+		this.goTo('address', { label })
 	}
 
 	getAddress(address)
 	{
-		this.setState({ address })
-		this.goTo('process')
+		this.goTo('process', { address })
 	}
 
 	getProcess(success)
@@ -98,7 +107,8 @@ class FIFSRegistration extends React.Component
 						</>
 					:
 						<>
-							<Route exact path={ `${this.state.root}/`        } render={ (props) => null } />
+							<Route exact path={ `${this.state.root}/`        } render={ (props) => <RouteConnect context={this.state}                                         {...props}/> } />
+							<Route exact path={ `${this.state.root}/error`   } render={ (props) => <RouteError   context={this.state}                                         {...props}/> } />
 						</>
 				}
 				</Router>

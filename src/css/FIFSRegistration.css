@@ -44,8 +44,16 @@ button
 {
 	display: flex;
 	width:   calc(360px - 20px - 1rem);
-	padding: 0 .5rem;
+	padding: .3rem 0;
 	margin:  .5rem 0;
+}
+.FIFSRegistration form.valid .inputgroup
+{
+	border-bottom: 2px solid #00c851;
+}
+.FIFSRegistration form:not(.valid) .inputgroup
+{
+	border-bottom: 2px solid #ff4444;
 }
 .FIFSRegistration form .inputgroup *:not(:only-child)
 {
@@ -53,24 +61,27 @@ button
 }
 .FIFSRegistration form input
 {
-	width:  100%;
-	border: none;
+	width:   100%;
+	padding: 0;
+	border:  none;
 }
-.FIFSRegistration form .input-append
+.FIFSRegistration form.valid input
 {
-	text-align: left;
+	color: #00c851;
 }
-.FIFSRegistration form .input-append::before
+.FIFSRegistration form:not(.valid) input
+{
+	color: #ff4444;
+}
+.FIFSRegistration form label
+{
+	display:     inline-flex;
+	text-align:  left;
+	align-items: center;
+}
+.FIFSRegistration form label::before
 {
 	content: '.';
-}
-.FIFSRegistration form.valid .inputgroup
-{
-	border-bottom: 1px solid #00c851;
-}
-.FIFSRegistration form:not(.valid) .inputgroup
-{
-	border-bottom: 1px solid #ff4444;
 }
 .FIFSRegistration form button[type=submit]
 {

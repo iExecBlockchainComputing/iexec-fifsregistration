@@ -54,13 +54,14 @@ class RouteLabel extends React.Component
 			<form onSubmit={ this.submit.bind(this) } className={ this.state.valid ? 'valid' : '' }>
 				<div className='inputgroup'>
 					<input
+						id='input-label'
 						className='align-right'
 						placeholder='username'
 						onChange={ this.handleChange.bind(this) }
 					/>
-					<span className='input-append'>
+					<label htmlFor='input-label'>
 						{ this.props.context.network.domain }
-					</span>
+					</label>
 				</div>
 				<button type='submit'>
 					Claim

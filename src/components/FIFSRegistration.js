@@ -19,11 +19,11 @@ const ABI = {
 class FIFSRegistration extends React.Component
 {
 	state = {
-		config:   this.props.config,
 		root:     this.props.root || '',
 		history:  createMemoryHistory(),
 		ethereum: this.props.ethereum || window.ethereum,
 		provider: null,
+		network:  null,
 		ens:      null,
 		proxy:    null,
 	}
@@ -47,28 +47,44 @@ class FIFSRegistration extends React.Component
 		})
 	}
 
+	buildProvider()
+	{
+		const provider = new ethers.providers.Web3Provider(this.state.ethereum)
+		provider.ready.then(({ chainId, ensAddress }) => {
+			try
+			{
+				const network = this.props.config.networks[chainId]
+				this.setState(
+					{
+						provider,
+						network,
+						ens:   new ethers.Contract(network.ensAddress || ensAddress, ABI.ens,   provider),
+						proxy: new ethers.Contract(network.proxy,                    ABI.proxy, provider.getSigner()),
+					},
+					() => this.goTo('label')
+				)
+			}
+			catch
+			{
+				this.setState(
+					{
+						provider: null,
+						network:  null,
+						ens:      null,
+						proxy:    null,
+					},
+					() => this.goTo('error', { error: 'Invalid network' })
+				)
+			}
+		})
+	}
+
 	componentDidMount()
 	{
 		this.enable()
 		.then(() => {
-			const provider = new ethers.providers.Web3Provider(this.state.ethereum)
-			provider.ready.then(network => {
-				try
-				{
-					this.setState(
-						{
-							provider,
-							ens:     new ethers.Contract(this.state.config.ensAddress || network.ensAddress, ABI.ens, provider),
-							proxy:   new ethers.Contract(this.state.config.proxy, ABI.proxy, provider.getSigner()),
-						},
-						() => this.goTo('label')
-					)
-				}
-				catch
-				{
-					this.goTo('error', { error: 'ENS is not available on this network' })
-				}
-			})
+			this.state.ethereum.on('networkChanged', this.buildProvider.bind(this))
+			this.buildProvider()
 		})
 		.catch(() => {
 			this.goTo('error', { error: 'Connection refused' })

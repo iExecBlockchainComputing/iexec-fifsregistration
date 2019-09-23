@@ -1,6 +1,12 @@
 {
-	"domain": "users.iexec.eth",
-	"resolver": "0xD3ddcCDD3b25A8a7423B5bEe360a42146eb4Baf3",
-	"proxy": "0x3a9e353Dd77570d06b2400D3f0eac4E644a223Dd",
-	"ensAddress": null
+	"networks":
+	{
+		"1":
+		{
+			"domain": "users.iexec.eth",
+			"resolver": "0xD3ddcCDD3b25A8a7423B5bEe360a42146eb4Baf3",
+			"proxy": "0x3a9e353Dd77570d06b2400D3f0eac4E644a223Dd",
+			"ensAddress": null
+		}
+	}
 }

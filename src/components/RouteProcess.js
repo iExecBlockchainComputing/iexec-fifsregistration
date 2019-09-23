@@ -11,8 +11,8 @@ class RouteProcess extends React.Component
 	{
 		this.props.context.proxy.registerENS(
 			this.props.context.ens.address,
-			this.props.context.config.resolver,
-			ethers.utils.namehash(this.props.context.config.domain),
+			this.props.context.network.resolver,
+			ethers.utils.namehash(this.props.context.network.domain),
 			ethers.utils.solidityKeccak256(['string'], [this.props.context.label]),
 			this.props.context.address,
 		)

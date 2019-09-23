@@ -22,7 +22,7 @@ class RouteLabel extends React.Component
 			}
 			else
 			{
-				const name = `${label}.${this.props.context.config.domain}`
+				const name = `${label}.${this.props.context.network.domain}`
 				const node = ethers.utils.namehash(name)
 				this.props.context.ens.owner(node)
 				.then(owner => {
@@ -59,7 +59,7 @@ class RouteLabel extends React.Component
 						onChange={ this.handleChange.bind(this) }
 					/>
 					<span className='input-append'>
-						{ this.props.context.config.domain }
+						{ this.props.context.network.domain }
 					</span>
 				</div>
 				<button type='submit'>

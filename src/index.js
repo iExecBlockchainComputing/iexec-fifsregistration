@@ -1,11 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
 
-import FIFSRegistration from './components/FIFSRegistration';
-import './css/FIFSRegistration.css';
+import FIFSRegistration from './components/FIFSRegistration'
+import './css/FIFSRegistration.css'
 
 import CONFIG  from './config/config'
+
+window.ethereum.autoRefreshOnNetworkChange = false
 
 ReactDOM.render(
 	<FIFSRegistration
@@ -14,4 +16,4 @@ ReactDOM.render(
 		config={CONFIG}
 	/>,
 	document.getElementById('root')
-);
+)

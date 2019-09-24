@@ -56,7 +56,7 @@ class RouteLabel extends React.Component
 					<input
 						id='input-label'
 						className='align-right'
-						placeholder='username'
+						placeholder='ens-name'
 						onChange={ this.handleChange.bind(this) }
 					/>
 					<label htmlFor='input-label'>
@@ -66,6 +66,7 @@ class RouteLabel extends React.Component
 				<button type='submit'>
 					Claim
 				</button>
+					<p>1 - Your wallet will open and you will be asked to confirm the first of two transactions required for registration.</p>
 			</form>
 		)
 	}

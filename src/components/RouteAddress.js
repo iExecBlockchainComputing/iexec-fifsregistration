@@ -94,6 +94,7 @@ class RouteAddress extends React.Component
 					<button onClick={ this.start.bind(this) }>
 						<img alt="qrcode" src={ camera }/>
 					</button>
+						<p>2 - Your wallet will open and you will be asked to confirm the first of two transactions required for registration.</p>
 				</div>
 			</form>
 		)

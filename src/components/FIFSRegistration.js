@@ -110,6 +110,7 @@ class FIFSRegistration extends React.Component
 	{
 		return (
 			<div className='FIFSRegistration'>
+			<h3 id='title-ensname'>iExec Username Registration</h3>
 				<Router history={this.state.history}>
 				{
 					this.state.provider

@@ -73,7 +73,7 @@ class FIFSRegistration extends React.Component
 						ens:      null,
 						proxy:    null,
 					},
-					() => this.goTo('error', { error: 'Invalid network' })
+					() => this.goTo('error', { error: 'Switch to a supported Ethereum network'  })
 				)
 			}
 		})
@@ -110,7 +110,9 @@ class FIFSRegistration extends React.Component
 	{
 		return (
 			<div className='FIFSRegistration'>
-			<h3 id='title-ensname'>iExec Username Registration</h3>
+				<h3 className='header'>
+					iExec Username Registration
+				</h3>
 				<Router history={this.state.history}>
 				{
 					this.state.provider

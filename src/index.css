@@ -1,14 +1,9 @@
 body
 {
-	display:         flex;
-	flex-direction:  column;
-	height:          100vh;
-	width:           100vw;
-	align-items:     center;
-	justify-content: center;
-	margin:          0;
-	font-family: "Proxima-Nova", sans-serif;
-	-webkit-font-smoothing: antialiased;
+	font-family:             "Proxima-Nova", sans-serif;
+	background:              #FFFFFF;
+	margin:                  0;
+	-webkit-font-smoothing:  antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 

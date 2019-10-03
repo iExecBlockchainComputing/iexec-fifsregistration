@@ -86,7 +86,11 @@ p {
 }
 .FIFSRegistration form .inputgroup *:not(:only-child)
 {
-	width: 50%;
+	width:   50%;
+}
+.FIFSRegistration form input:only-child
+{
+	padding: 0 1rem;
 }
 .FIFSRegistration form input
 {

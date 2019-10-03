@@ -5,7 +5,14 @@ class RouteFailure extends React.Component
 	render()
 	{
 		return (
-			<div class="notification">Something went wrong. Please check you have enough Ethereum in your wallet and try again.</div>
+			<div class="notification">
+				<p>
+					<h4>
+						Something went wrong.
+					</h4>
+					Check your wallet provider for additional information.
+				</p>
+			</div>
 		)
 	}
 }

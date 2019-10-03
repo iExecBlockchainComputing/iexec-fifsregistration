@@ -51,23 +51,27 @@ class RouteLabel extends React.Component
 	render()
 	{
 		return (
-			<form onSubmit={ this.submit.bind(this) } className={ this.state.valid ? 'valid' : '' }>
-				<div className='inputgroup'>
-					<input
-						id='input-label'
-						className='align-right'
-						placeholder='ens-name'
-						onChange={ this.handleChange.bind(this) }
-					/>
-					<label htmlFor='input-label'>
-						{ this.props.context.network.domain }
-					</label>
-				</div>
-				<button type='submit'>
-					Claim
-				</button>
-					<p>1 - Select your iExec username</p>
-			</form>
+			<>
+				<form onSubmit={ this.submit.bind(this) } className={ this.state.valid ? 'valid' : '' }>
+					<div className='inputgroup'>
+						<input
+							id='input-label'
+							className='align-right'
+							placeholder='ens-name'
+							onChange={ this.handleChange.bind(this) }
+						/>
+						<label htmlFor='input-label'>
+							{ this.props.context.network.domain }
+						</label>
+					</div>
+					<button type='submit'>
+						Claim
+					</button>
+				</form>
+				<p className='footer'>
+					1 - Select your iExec username
+				</p>
+			</>
 		)
 	}
 }

@@ -79,24 +79,28 @@ class RouteAddress extends React.Component
 	render()
 	{
 		return (
-			<form onSubmit={ this.submit.bind(this) } className={ this.state.valid ? 'valid' : '' }>
-				<video id='preview' className={ this.state.preview ? '': 'hidden' }/>
-				<div className={ !this.state.preview ? '': 'hidden' }>
-					<div className='inputgroup'>
-						<input
-							placeholder='ethereum address'
-							onChange={ this.handleChange.bind(this) }
-						/>
+			<>
+				<form onSubmit={ this.submit.bind(this) } className={ this.state.valid ? 'valid' : '' }>
+					<video id='preview' className={ this.state.preview ? '': 'hidden' }/>
+					<div className={ !this.state.preview ? '': 'hidden' }>
+						<div className='inputgroup'>
+							<input
+								placeholder='ethereum address'
+								onChange={ this.handleChange.bind(this) }
+							/>
+						</div>
+						<button type='submit'>
+							Go
+						</button>
+						<button onClick={ this.start.bind(this) }>
+							<img alt="qrcode" src={ camera }/>
+						</button>
 					</div>
-					<button type='submit'>
-						Go
-					</button>
-					<button onClick={ this.start.bind(this) }>
-						<img alt="qrcode" src={ camera }/>
-					</button>
-						<p>2 - Enter your ethereum adress or import your wallet with your QRCODE</p>
-				</div>
-			</form>
+				</form>
+				<p className='footer'>
+					2 - Enter your ethereum adress
+				</p>
+			</>
 		)
 	}
 }

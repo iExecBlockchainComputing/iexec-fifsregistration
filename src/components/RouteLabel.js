@@ -66,7 +66,7 @@ class RouteLabel extends React.Component
 				<button type='submit'>
 					Claim
 				</button>
-					<p>1 - Your wallet will open and you will be asked to confirm the first of two transactions required for registration.</p>
+					<p>1 - Select your iExec username</p>
 			</form>
 		)
 	}

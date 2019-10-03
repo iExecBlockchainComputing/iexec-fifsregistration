@@ -5,7 +5,7 @@ class RouteError extends React.Component
 	render()
 	{
 		return (
-			<div>RouteError: { this.props.context.error }</div>
+			<div class="notification">Oops: { this.props.context.error }</div>
 		)
 	}
 }

@@ -12,11 +12,10 @@ button
 	vertical-align: middle;
 	word-wrap:      break-word;
 	white-space:    normal;
-	border:         10;
 	border-radius:  .250rem;
 	border-color: #d4dcea;
 	box-shadow:     0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
-	padding:        .5rem 2.5rem;
+	padding:        .8rem 2.6rem;
 	margin:         .5rem;
 	transition:     color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
@@ -76,10 +75,14 @@ p {
 .FIFSRegistration form .inputgroup
 {
 	display:       flex;
-	width:         calc(360px - 20px - 1rem);
+	width:         100%;
 	padding:       .3rem 0;
 	margin:        .5rem 0;
 	border-bottom: 2px solid #11B15E;
+}
+.FIFSRegistration form
+{
+	width: 100%;
 }
 .FIFSRegistration form .inputgroup *:not(:only-child)
 {
@@ -112,6 +115,7 @@ p {
 {
 	margin: -.4rem;
 	height: 1.4rem;
+  width: 1.4em;
 }
 
 /*****************************************************************************
@@ -130,6 +134,13 @@ p {
 	cursor:           not-allowed;
 	pointer-events:   none;
 	background-color: #fff;
+}
+/*****************************************************************************
+ *                    FIFSRegistration - Notifications                  *
+ *****************************************************************************/
+.notification{
+  color:#4F5C73;
+
 }
 
 /*****************************************************************************

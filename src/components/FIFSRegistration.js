@@ -88,7 +88,10 @@ class FIFSRegistration extends React.Component
 	{
 		this.enable()
 		.then(() => {
-			this.state.ethereum.on('networkChanged', this.buildProvider.bind(this))
+			if (this.state.ethereum.on)
+			{
+				this.state.ethereum.on('networkChanged', this.buildProvider.bind(this))
+			}
 			this.buildProvider()
 		})
 		.catch(() => {

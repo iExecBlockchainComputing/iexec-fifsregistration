@@ -33,6 +33,11 @@ class FIFSRegistration extends React.Component
 		this.setState(args, () => { this.state.history.push(`${this.state.root}/${route}`) })
 	}
 
+	componentDidMount()
+	{
+		this.goTo('')
+	}
+
 	enable()
 	{
 		return new Promise((resolve, reject) => {
@@ -79,7 +84,7 @@ class FIFSRegistration extends React.Component
 		})
 	}
 
-	componentDidMount()
+	connect()
 	{
 		this.enable()
 		.then(() => {
@@ -126,7 +131,7 @@ class FIFSRegistration extends React.Component
 						</>
 					:
 						<>
-							<Route exact path={ `${this.state.root}/`        } render={ (props) => <RouteConnect context={this.state}                                         {...props}/> } />
+							<Route exact path={ `${this.state.root}/`        } render={ (props) => <RouteConnect context={this.state} callback={ this.connect.bind(this)    } {...props}/> } />
 							<Route exact path={ `${this.state.root}/error`   } render={ (props) => <RouteError   context={this.state}                                         {...props}/> } />
 						</>
 				}

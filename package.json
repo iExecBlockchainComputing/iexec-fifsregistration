@@ -3,21 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "homepage": ".",
-	"dependencies": {
-    "@babel/runtime": "^7.6.0",
-    "@ensdomains/ens": "^0.3.11",
-    "@ensdomains/resolver": "^0.1.9",
+  "dependencies": {
+    "@babel/runtime": "^7.6.2",
     "@eventstag/instascan": "^2.0.1",
-    "@fortawesome/fontawesome-svg-core": "^1.2.15",
-    "@fortawesome/free-solid-svg-icons": "^5.7.2",
-    "@fortawesome/react-fontawesome": "^0.1.4",
     "ethers": "^4.0.37",
-    "mdbreact": "^4.19.2",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-fontawesome": "^1.6.1",
-    "react-router-dom": "^5.0.1",
-    "react-scripts": "3.1.1"
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.1.2"
   },
   "scripts": {
     "start": "react-scripts start",

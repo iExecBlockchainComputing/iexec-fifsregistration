@@ -13,7 +13,7 @@ class RouteProcess extends React.Component
 			this.props.context.ens.address,
 			this.props.context.network.resolver,
 			ethers.utils.namehash(this.props.context.network.domain),
-			ethers.utils.solidityKeccak256(['string'], [this.props.context.label]),
+			ethers.utils.solidityKeccak256(['string'], [ this.props.context.label.toLowerCase() ]),
 			this.props.context.address,
 		)
 		.then(() => this.props.callback(true))

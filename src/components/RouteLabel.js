@@ -16,6 +16,7 @@ class RouteLabel extends React.Component
 	checkValidity(label)
 	{
 		return new Promise((resolve, reject) => {
+			label = label.toLowerCase();
 			if (label.includes('.'))
 			{
 				reject()

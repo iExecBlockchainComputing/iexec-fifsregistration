@@ -17,7 +17,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "rsync -avz --delete build/* maia:/srv/http/apps/iexecregistration/."
+    "deploy": "rsync -avz --delete build/* research.iex.ec:/srv/http/apps/ens/."
   },
   "eslintConfig": {
     "extends": "react-app"
